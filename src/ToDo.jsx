@@ -92,7 +92,9 @@ export default class ToDo extends Component {
     return (
       <main className="toDo__board">
         <h1 className="toDo__title">
-          ToDo App React version
+          ToDo App
+          <br />
+          React version
           <span role="img" aria-label="watermelon emoji">🍉</span>
         </h1>
         <ToDoInput handleItem={this.addItemToList} />
