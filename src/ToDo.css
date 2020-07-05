@@ -1,3 +1,20 @@
 .toDo__board{
-background-color: aliceblue;
+background-color: rgba(240, 248, 255, 0.548);
+padding: 1rem 1rem 2rem;
+display: flex;
+height: 100%;
+flex-direction: column;
+font-family: 'Montserrat Alternates', sans-serif;
+font-weight: 600;
+}
+
+.todo__board--onGoing{
+  background-color: #ff6d9e;
+  margin: 1.4rem 0;
+  padding: 0.5rem 0;
+}
+.todo__board--done{
+  background-color: #7ae47a;
+  margin: 1.4rem 0;
+  padding: 0.5rem 0;
 }

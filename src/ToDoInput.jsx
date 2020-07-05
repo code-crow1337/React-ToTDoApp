@@ -22,7 +22,7 @@ export default class ToDoInput extends Component {
 
   handleAddItem(e) {
     e.preventDefault();
-    const { onGoing, value } = this.state;
+    const { value } = this.state;
     const { handleItem } = this.props;
     if (!this.validateValue()) return this.setState({ message: 'An item must be specified' });
     handleItem(value);
@@ -43,9 +43,12 @@ export default class ToDoInput extends Component {
             value={value}
             onChange={e => this.setState({ value: e.target.value })}
           />
-          <button type="submit" form="addItemForm">Add</button>
+          <button className="todo__form__btn" type="submit" form="addItemForm">Add</button>
         </form>
       </>
     );
   }
 }
+ToDoInput.propTypes = {
+  handleItem: PropTypes.func.isRequired,
+};

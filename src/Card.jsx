@@ -3,25 +3,11 @@ import PropTypes from 'prop-types';
 import './Card.css';
 
 export default class Card extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activity: '',
-      done: false,
-    };
-
-  }
-
-  componentDidMount() {
+  handleClick(e) {
+    if (e.target.innerHTML === 'Delete') return this.handleDelete();
     const { todoItem } = this.props;
-    this.setState({ activity: todoItem, done: false });
-  }
-
-  handleClick() {
-    this.setState({ done: true });
-    const { activity, done } = this.state;
-    const { handleItemClick } = this.props;
-    handleItemClick(activity, done);
+    const { handleItemClick, itemDone } = this.props;
+    return handleItemClick(todoItem, itemDone);
   }
 
   handleKeyPress(e) {
@@ -29,8 +15,13 @@ export default class Card extends Component {
     return this.handleClick(e);
   }
 
+  handleDelete() {
+    const { todoItem, removeItemHandler, itemDone } = this.props;
+    if (itemDone) removeItemHandler(todoItem);
+  }
+
   render() {
-    const { activity } = this.state;
+    const { todoItem, itemDone } = this.props;
     return (
       <div
         role="button"
@@ -39,7 +30,13 @@ export default class Card extends Component {
         onKeyPress={e => this.handleKeyPress(e)}
       >
         <article className="toDo__card">
-          <h2>{activity}</h2>
+          <h2 className="toDo__card__activity">{todoItem}</h2>
+          {itemDone ? (
+            <button type="button" className="toDo__btn--delete" onClick={e => this.handleDelete(e)}>
+              Delete
+            </button>
+          )
+            : ''}
         </article>
       </div>
     );
@@ -47,8 +44,11 @@ export default class Card extends Component {
 }
 Card.propTypes = {
   todoItem: PropTypes.string,
+  itemDone: PropTypes.bool,
   handleItemClick: PropTypes.func.isRequired,
+  removeItemHandler: PropTypes.func.isRequired,
 };
 Card.defaultProps = {
   todoItem: '',
+  itemDone: false,
 };
