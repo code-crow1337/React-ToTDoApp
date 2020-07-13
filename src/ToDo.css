@@ -1,0 +1,33 @@
+.toDo__board{
+background-color: rgba(240, 248, 255, 0.548);
+padding: 1rem 1rem 2rem;
+display: flex;
+height: max-content;
+width: 90vw;
+flex-direction: column;
+font-family: 'Montserrat Alternates', sans-serif;
+font-weight: 600;
+}
+
+.todo__board--onGoing{
+  background-color: #7ae47a;
+  margin: 1.4rem 0;
+  padding: 0.5rem 0;
+}
+.todo__board--done{
+  background-color: #7ae47a;
+  margin: 1.4rem 0;
+  padding: 0.5rem 0;
+}
+
+@media only screen and (min-width: 650px) {
+  .toDo__board{
+    max-width: 500px;
+    min-height: 100%;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .toDo__board{
+    max-width: 500px;
+  }
+}

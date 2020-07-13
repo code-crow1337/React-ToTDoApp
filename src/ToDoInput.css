@@ -1,0 +1,36 @@
+.toDo__form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.todo__form__input {
+  text-align: center;
+  max-width: 90vw;
+  max-height: 5vh;
+  height: 4vh;
+  width: 100%;
+  font-family: 'Imprima', sans-serif;
+  font-size: 1.2rem;
+  border: none;
+  margin-bottom: 1rem;
+
+}
+.todo__form__input:focus{
+  color: green;
+}
+.todo__form__btn{
+  width: 30vw;
+  height: 5vh;
+  background-color: rgb(53, 144, 53);
+  color: white;
+  box-shadow: 1px 3px 2px #494949b4;
+}
+
+/* DESKTOP */
+@media only screen and (min-width: 1000px) {
+  .todo__form__btn:hover{
+    background-color: #2bc265;
+    transform: translateY(4px);
+    box-shadow: 1px 1px 1px #494949f3;
+    }
+}

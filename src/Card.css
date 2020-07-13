@@ -1,0 +1,43 @@
+.toDo__card {
+  background-color: rgba(240, 248, 255, 0.548);
+  border: 2px solid white;
+  border-radius: 1rem;
+  margin: 0 0 0.5rem;
+  padding: 1rem;
+  box-shadow: 1px 3px 2px #494949b4;
+}
+.toDo__card:active {
+  transform: translateY(4px);
+  box-shadow: 1px 1px 1px #494949f3;
+}
+.toDo__card__activity{
+  font-family: 'Imprima', sans-serif;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+.toDo__btn--delete{
+  width: 30vw;
+  height: 5vh;
+  background-color:#de495a;
+  margin-top: 0.5rem;
+}
+
+
+/* DESKTOP */
+@media only screen and (min-width: 1000px) {
+  body{
+    background-size: cover;
+  }
+  .toDo__card:hover{
+    background-color: #529e6f93;
+  }
+  .toDo__card:active{
+    background-color: #3f865ad0;
+    border: 1px solid white;
+  }
+  .toDo__btn--delete:hover{
+    background-color:#8f1422;
+    transform: translateY(4px);
+    box-shadow: 1px 1px 1px #494949f3;
+  }
+}
