@@ -7,8 +7,7 @@ export default class ToDo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      onGoing: [],
-      done: [],
+      items: [],
       id: 0,
     };
     this.addItemToList = this.addItemToList.bind(this);
@@ -17,13 +16,13 @@ export default class ToDo extends Component {
   }
 
   addItemToList(item) {
-    const { onGoing } = this.state;
-    const newItemAdded = onGoing.concat({
+    const { items } = this.state;
+    const newItemAdded = items.concat({
       activity: item,
       completed: false,
       id: this.generateID(),
     });
-    this.setState({ onGoing: newItemAdded });
+    this.setState({ items: newItemAdded });
   }
 
   generateID() {
@@ -32,63 +31,54 @@ export default class ToDo extends Component {
     return id.toString();
   }
 
-  findItemInList(nameOfList, activity) {
-    const { [nameOfList]: list } = this.state;
-    const checkIndex = list.findIndex(item => item.activity === activity);
-    if (!checkIndex && checkIndex !== 0) return '';
-    return checkIndex;
+  switchList(idOfClickedItem) {
+    const { items } = this.state;
+    const updatedList = items.map(item => {
+      if (item.id === idOfClickedItem) {
+        item.completed = !item.completed;
+      }
+      return item;
+    });
+    this.setState({ items: updatedList });
   }
 
-  updateList(prevListName, newListName, prevIndex) {
-    const { [prevListName]: prevList, [newListName]: newList } = this.state;
-    prevList[prevIndex].completed = !prevList[prevIndex].completed;
-    const addItemToNewList = [...newList, prevList[prevIndex]];
-    const updatePrevList = prevList.filter(item => item !== prevList[prevIndex]);
-    return { updatedPrev: updatePrevList, updatedNew: addItemToNewList };
+  removeItemFromState(id) {
+    console.log(id);
+    const { items } = this.state;
+    const itemRemoved = items.filter(item => item.id !== id);
+    console.log('filter', itemRemoved);
+    this.setState({ items: itemRemoved });
   }
 
-  switchList(activity, finished) {
-    let activityIndex = 0;
-    let prevList = '';
-    let newList = '';
-    if (!finished) {
-      prevList = 'onGoing';
-      newList = 'done';
-      activityIndex = this.findItemInList('onGoing', activity);
-      const { updatedPrev, updatedNew } = this.updateList(prevList, newList, activityIndex);
-      this.setState({ [prevList]: updatedPrev, [newList]: updatedNew });
-    } else {
-      prevList = 'done';
-      newList = 'onGoing';
-      activityIndex = this.findItemInList('done', activity);
-      const { updatedPrev, updatedNew } = this.updateList(prevList, newList, activityIndex);
-      updatedNew.sort((a, b) => a.id - b.id);
-      this.setState({ [prevList]: updatedPrev, [newList]: updatedNew });
-    }
-  }
+  checkValidationRender() {
+    const { items } = this.state;
+    if (!items) return '';
 
-  removeItemFromState(activity) {
-    const { done } = this.state;
-    const itemRemoved = done.filter(item => item.activity !== activity);
-    this.setState({ done: itemRemoved });
-  }
-
-  checkValidationRender(list, itemDone) {
-    if (!list) return '';
-    return (
-      list.map(item => (
-        <Card
-          key={item.id.toString()}
-          todoItem={item.activity}
-          handleItemClick={this.switchList}
-          itemDone={itemDone}
-          removeItemHandler={this.removeItemFromState}
-        />
-      )));
+    const done = items.filter(item => item.completed).map(item => (
+      <Card
+        key={item.id.toString()}
+        todoItem={item.activity}
+        handleItemClick={this.switchList}
+        itemDone={item.completed}
+        id={item.id}
+        removeItemHandler={this.removeItemFromState}
+      />
+    ));
+    const onGoing = items.filter(item => !item.completed).map(item => (
+      <Card
+        key={item.id.toString()}
+        todoItem={item.activity}
+        id={item.id}
+        handleItemClick={this.switchList}
+        itemDone={item.completed}
+        removeItemHandler={this.removeItemFromState}
+      />
+    ));
+    return { done, onGoing };
   }
 
   render() {
-    const { onGoing, done } = this.state;
+    const { done, onGoing } = this.checkValidationRender();
     return (
       <main className="toDo__board">
         <h1 className="toDo__title">
@@ -99,10 +89,9 @@ export default class ToDo extends Component {
         </h1>
         <ToDoInput handleItem={this.addItemToList} />
         <h2 className="todo__board--onGoing">OnGoing</h2>
-        {this.checkValidationRender(onGoing, false)}
+        {onGoing}
         <h2 className="todo__board--done">Done</h2>
-        {this.checkValidationRender(done, true)}
-
+        {done}
       </main>
     );
   }

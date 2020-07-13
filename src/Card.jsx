@@ -4,10 +4,9 @@ import './Card.css';
 
 export default class Card extends Component {
   handleClick(e) {
-    if (e.target.innerHTML === 'Delete') return this.handleDelete();
-    const { todoItem } = this.props;
-    const { handleItemClick, itemDone } = this.props;
-    return handleItemClick(todoItem, itemDone);
+    const { handleItemClick, id } = this.props;
+    if (e.target.className === 'toDo__btn--delete') return this.handleDelete(id);
+    return handleItemClick(id);
   }
 
   handleKeyPress(e) {
@@ -16,8 +15,8 @@ export default class Card extends Component {
   }
 
   handleDelete() {
-    const { todoItem, removeItemHandler, itemDone } = this.props;
-    if (itemDone) removeItemHandler(todoItem);
+    const { id, removeItemHandler, itemDone } = this.props;
+    if (itemDone) removeItemHandler(id);
   }
 
   render() {
@@ -47,6 +46,7 @@ Card.propTypes = {
   itemDone: PropTypes.bool,
   handleItemClick: PropTypes.func.isRequired,
   removeItemHandler: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 Card.defaultProps = {
   todoItem: '',
